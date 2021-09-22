@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>pagination</title>
+    <link rel="stylesheet"  href="pathofcssfile.css">
+    <style>
+      ul{
+display: flex;
+list-style-type:none;
+padding: 20px;
+}
+
+li{
+padding: 20px;
+background-color: blue;
+border: 2px solid #000;
+}
+li:active{
+padding: 20px;
+background-color: #fff;
+border: 2px solid #000;
+}
+
+td,tr{
+    padding: 10px;
+}
+    </style>
+</head>
+<body>
+    <div>
+        <table id="user"></table>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <ul>
+    <li value="1">1</li>
+    <li value="2">2</li>
+    <li value="3">3</li>
+    <li value="4">4</li>
+    <li value="5">5</li>
+    <li value="6">6</li>
+    <li value="7">7</li>
+    <li value="8">8</li>
+    <li value="9">9</li>
+    <li value="10">10</li>
+
+    </ul>
+
+    <script>
+    var xhr = new XMLHttpRequest();
+xhr.open('GET',"https://jsonplaceholder.typicode.com/albums",true);
+xhr.send();
+
+var udata;
+
+xhr.onload = function() 
+{
+    if(this.status == 200) 
+    {
+        var userdata = JSON.parse(this.responseText);
+        console.log(userdata);
+        udata = userdata;
+        data(1);
+    }
+}
+
+$("li").click(function ()
+{       
+var a = $(this).attr("value");
+console.log("value li "+ a);
+data(a);
+});
+
+function data(a)
+{  
+    var output = "";
+    for(i=((a-1)*10);i<(a*10);i++)
+    {
+        output +='<tr>'+
+                 '<td>'+ udata[i].userId + '</td>'+
+                 '<td>'+ udata[i].id + '</td>'+
+                 '<td>'+ udata[i].title + '</td>'+ '<br>'
+                 '</tr>';
+    }
+    document.getElementById('user').innerHTML = output;
+}</script>
+</body>
+</html>
